@@ -29,8 +29,14 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let order = Order()
+        order.products = Array(mockProducts.prefix(upTo: 3))
+        // any more parameters set up here
+
+        return ContentView().environmentObject(order)
+    }
 }
 
 

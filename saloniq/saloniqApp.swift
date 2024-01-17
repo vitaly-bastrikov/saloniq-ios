@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct saloniApp: App {
+    
+    @StateObject var order = Order()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
+        .environmentObject(order)
     }
+
 }

@@ -17,8 +17,21 @@ struct Product: Identifiable {
     var imageURL: String
 }
 
+// Our observable object class
+class Order: ObservableObject {
+    @Published var products: [Product] = []
+    
+    var total: Double {
+        var temp = 0.0
+        for product in products {
+            temp += Double(product.price) ?? 0
+        }
+        return temp
+    }
+}
 
-var products: [Product] = [
+
+var mockProducts: [Product] = [
     Product(title: "LEAVE IN FOR HAIR REPAIR", price: "9.99", imageURL: "https://firebasestorage.googleapis.com/v0/b/saloniq-f4fd8.appspot.com/o/product-images%2Fimg1.jpg?alt=media&token=fe7c3502-cf00-4cd4-ad8b-46ea620dfb9c"),
     Product(title: "SHAMPOO FOR HAIR REPAIR", price: "19.99", imageURL: "https://firebasestorage.googleapis.com/v0/b/saloniq-f4fd8.appspot.com/o/product-images%2Fimg2.jpeg?alt=media&token=6bc0873b-6a41-4838-badf-56003ef4a634"),
     Product(title: "HAIR REPAIR MASK", price: "29.99", imageURL: "https://firebasestorage.googleapis.com/v0/b/saloniq-f4fd8.appspot.com/o/product-images%2Fimg3.jpeg?alt=media&token=5749b1a3-3064-4af7-83b6-886b2dd376a5"),

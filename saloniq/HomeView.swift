@@ -2,6 +2,10 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @EnvironmentObject var order: Order
+    
+    
     var body: some View {
         VStack {
             
@@ -29,7 +33,7 @@ struct HomeView: View {
             // Products
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
-                    ForEach(products) { product in
+                    ForEach(mockProducts) { product in
                         ExtractedView(product: product)
                         
                     }
@@ -43,13 +47,22 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        let order = Order()
+        order.products = Array(mockProducts.prefix(upTo: 3))
+        order.products = []
+        // any more parameters set up here
+        
+        return HomeView().environmentObject(order)
+    }
 }
 
 struct ExtractedView: View {
+    @EnvironmentObject var order: Order
+    
     var product: Product
-    var body: some View {
+        var body: some View {
         HStack{
             AsyncImage(url: URL(string: product.imageURL)) { image in
                 image.resizable()
@@ -72,13 +85,14 @@ struct ExtractedView: View {
             
             Spacer()
             
-            Button("ADD TO CART") {}
-                .foregroundColor(.white)
-                .font(.system(size: 12, weight: .light))
-                .padding(7)
-                .background(Color(UIColor.darkGray))
+            Button("ADD TO CART") {
+                order.products.append(product)
+            }
+            .foregroundColor(.white)
+            .font(.system(size: 12, weight: .light))
+            .padding(7)
+            .background(Color(UIColor.darkGray))
             
-
         }
         .padding()
     }
