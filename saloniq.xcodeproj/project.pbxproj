@@ -16,7 +16,6 @@
 		26C7B9602B5756E0003DF1C0 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7B95F2B5756E0003DF1C0 /* AccountView.swift */; };
 		26C7B9622B575D5A003DF1C0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7B9612B575D59003DF1C0 /* HomeView.swift */; };
 		26C7B9652B59F8EE003DF1C0 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7B9642B59F8EE003DF1C0 /* ProductView.swift */; };
-		26C7B9682B5A0486003DF1C0 /* PaymentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C7B9672B5A0486003DF1C0 /* PaymentHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +30,6 @@
 		26C7B9612B575D59003DF1C0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		26C7B9632B575EE8003DF1C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		26C7B9642B59F8EE003DF1C0 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
-		26C7B9672B5A0486003DF1C0 /* PaymentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHandler.swift; sourceTree = "<group>"; };
-		26C7B9692B5A07F1003DF1C0 /* saloniq.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = saloniq.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,14 +62,16 @@
 		26C7B94A2B56F7B4003DF1C0 /* saloniq */ = {
 			isa = PBXGroup;
 			children = (
-				26C7B9692B5A07F1003DF1C0 /* saloniq.entitlements */,
-				26C7B9672B5A0486003DF1C0 /* PaymentHandler.swift */,
 				26C7B9632B575EE8003DF1C0 /* Info.plist */,
 				26C7B94B2B56F7B4003DF1C0 /* saloniqApp.swift */,
+				26C7B94D2B56F7B4003DF1C0 /* ContentView.swift */,
 				26C7B94F2B56F7B6003DF1C0 /* Assets.xcassets */,
 				26C7B9512B56F7B6003DF1C0 /* Preview Content */,
 				26C7B9592B56FE04003DF1C0 /* Entity.swift */,
-				26C7B9662B5A046C003DF1C0 /* views */,
+				26C7B95F2B5756E0003DF1C0 /* AccountView.swift */,
+				26C7B95D2B57548F003DF1C0 /* CartView.swift */,
+				26C7B9642B59F8EE003DF1C0 /* ProductView.swift */,
+				26C7B9612B575D59003DF1C0 /* HomeView.swift */,
 			);
 			path = saloniq;
 			sourceTree = "<group>";
@@ -83,18 +82,6 @@
 				26C7B9522B56F7B6003DF1C0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		26C7B9662B5A046C003DF1C0 /* views */ = {
-			isa = PBXGroup;
-			children = (
-				26C7B94D2B56F7B4003DF1C0 /* ContentView.swift */,
-				26C7B95F2B5756E0003DF1C0 /* AccountView.swift */,
-				26C7B95D2B57548F003DF1C0 /* CartView.swift */,
-				26C7B9642B59F8EE003DF1C0 /* ProductView.swift */,
-				26C7B9612B575D59003DF1C0 /* HomeView.swift */,
-			);
-			path = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,7 +157,6 @@
 				26C7B9602B5756E0003DF1C0 /* AccountView.swift in Sources */,
 				26C7B9622B575D5A003DF1C0 /* HomeView.swift in Sources */,
 				26C7B94E2B56F7B4003DF1C0 /* ContentView.swift in Sources */,
-				26C7B9682B5A0486003DF1C0 /* PaymentHandler.swift in Sources */,
 				26C7B94C2B56F7B4003DF1C0 /* saloniqApp.swift in Sources */,
 				26C7B9652B59F8EE003DF1C0 /* ProductView.swift in Sources */,
 				26C7B95A2B56FE04003DF1C0 /* Entity.swift in Sources */,
@@ -305,7 +291,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = saloniq/saloniq.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"saloniq/Preview Content\"";
@@ -337,7 +322,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = saloniq/saloniq.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"saloniq/Preview Content\"";
