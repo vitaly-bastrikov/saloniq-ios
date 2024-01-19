@@ -12,6 +12,46 @@ struct CartView: View {
     
     @EnvironmentObject var order: Order
     @State var total: Int = 0
+    @State private var isLoading = false
+    
+    let paymentHandler = PaymentHandler()
+    
+    var applePayButton: some View {
+        
+        HStack {
+            Spacer()
+            PayWithApplePayButton {
+                print("Trying to Pay with Apple")
+                isLoading = false
+                var paymentSummaryItems = [PKPaymentSummaryItem]()
+                order.products.forEach { product in
+                    paymentSummaryItems.append(PKPaymentSummaryItem(
+                        label: product.title,
+                        amount: NSDecimalNumber(string: product.price),
+                        type: .final)
+                    )
+                }
+                paymentSummaryItems.append(PKPaymentSummaryItem(
+                    label: "Total",
+                    amount: NSDecimalNumber(string: String(order.total)),
+                    type: .final)
+                )
+                
+                self.paymentHandler.startPayment(items: paymentSummaryItems) { ok, paymentJson in
+                    if ok {
+                        print("success")
+                    } else {
+                        print("failure")
+                    }
+                    self.isLoading = false
+                }
+            }
+            .scaledToFit()
+            .frame(width: 150)
+            Spacer()
+        }
+        
+    }
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -29,7 +69,6 @@ struct CartView: View {
                         }
                     }
                 }
-                Spacer()
                 
                 // total
                 HStack () {
@@ -44,25 +83,21 @@ struct CartView: View {
                     Spacer()
                 }.padding()
                 
-                //            Spacer()
                 
-                // Place your order
-                HStack {
-                    Spacer()
-                    Button("PLACE YOUR ORDER") {
-                        print("ORDER PLACED")
+                
+                
+                if !self.isLoading {
+                    if PKPaymentAuthorizationController.canMakePayments() {
+                        applePayButton
+                    } else {
+                        Text("Cannot pay with Apple")
                     }
-                    .foregroundColor(.white)
-                    .font(.system(size: 12, weight: .light))
-                    .padding(10)
-                    .background(Color(UIColor.darkGray))
-                    Spacer()
                 }
+                
+                
             } else {
                 EmptyCartView()
             }
-            
-            
             
             
         }
@@ -74,7 +109,7 @@ struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
         let order = Order()
         order.products = Array(mockProducts.prefix(upTo: 3))
-        order.products = []
+        //        order.products = []
         // any more parameters set up here
         
         return CartView().environmentObject(order)
@@ -138,3 +173,5 @@ struct EmptyCartView: View {
         Spacer()
     }
 }
+
+
