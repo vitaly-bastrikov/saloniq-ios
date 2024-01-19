@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import PassKit
 
-struct OrderView: View {
+struct CartView: View {
     
     @EnvironmentObject var order: Order
     @State var total: Int = 0
@@ -76,7 +77,7 @@ struct OrderView_Previews: PreviewProvider {
         order.products = []
         // any more parameters set up here
         
-        return OrderView().environmentObject(order)
+        return CartView().environmentObject(order)
     }
 }
 

@@ -15,7 +15,7 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            OrderView()
+            CartView()
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
