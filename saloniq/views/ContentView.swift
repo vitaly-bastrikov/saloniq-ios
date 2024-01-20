@@ -10,9 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            HomeView()
+            ShopView()
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Label("Products", systemImage: "house")
                 }
 
             CartView()
@@ -32,9 +32,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let order = Order()
-        order.products = Array(mockProducts.prefix(upTo: 3))
-        // any more parameters set up here
-
+        order.orderItems = Array(mockOrderItems.prefix(upTo: 3))
         return ContentView().environmentObject(order)
     }
 }

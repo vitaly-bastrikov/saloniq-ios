@@ -47,7 +47,7 @@ struct CheckoutView: View {
                 
             }
         }
-        order.products = []
+        order.orderItems = []
     }
     
     
@@ -105,7 +105,7 @@ struct CheckoutView: View {
             
             Spacer()
             
-            if order.products.count == 0 {
+            if order.orderItems.count == 0 {
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()
                     .scaledToFit()
@@ -142,9 +142,7 @@ struct CheckoutView: View {
 struct CheckoutView_Previews: PreviewProvider {
     static var previews: some View {
         let order = Order()
-        order.products = Array(mockProducts.prefix(upTo: 3))
-        // any more parameters set up here
-        
+        order.orderItems = Array(mockOrderItems.prefix(upTo: 3))
         return CheckoutView().environmentObject(order)
     }
 }

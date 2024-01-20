@@ -13,6 +13,10 @@ struct ProductView: View {
     
     let product: Product
     
+    
+    
+    
+    
     var body: some View {
         VStack {
             Text("\(product.title)")
@@ -35,14 +39,15 @@ struct ProductView: View {
                 .padding()
             
             Spacer()
-            Text("$\(product.price)")
+            Text("$\(product.price, specifier: "%.2f")")
                 .foregroundColor(.darkGray)
                 .font(.system(size: 14, weight: .light))
                 .padding()
             
             
             Button("ADD TO CART") {
-                order.products.append(product)
+                order.addToCart(product: product)
+
                 dismiss()
             }
             .foregroundColor(.white)
@@ -61,11 +66,8 @@ struct ProductView_Previews: PreviewProvider {
     
     static var previews: some View {
         let product = mockProducts[0]
-        
         let order = Order()
-        order.products = Array(mockProducts.prefix(upTo: 3))
-        order.products = []
-        // any more parameters set up here
+        order.orderItems = Array(mockOrderItems.prefix(upTo: 3))
         
         return ProductView(product: product).environmentObject(order)
     }

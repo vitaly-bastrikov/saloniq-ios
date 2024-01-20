@@ -22,7 +22,7 @@ struct CartView: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(order.products)
+        request.httpBody = try? JSONEncoder().encode(order.total)
         
         URLSession.shared.dataTask(with: request) {data, response, error in
             
@@ -41,6 +41,7 @@ struct CartView: View {
     }
     
     
+    
     var body: some View {
         NavigationStack {
             VStack (alignment: .leading) {
@@ -50,11 +51,11 @@ struct CartView: View {
                     .padding()
                 
                 // card products
-                if order.products.count > 0 {
+                if order.orderItems.count > 0 {
                     ScrollView(showsIndicators: false) {
                         VStack() {
-                            ForEach(order.products) { product in
-                                OrderItemView(product: product)
+                            ForEach(order.orderItems) { orderItem in
+                                OrderItemView(orderItem: orderItem)
                             }
                         }
                     }
@@ -95,24 +96,19 @@ struct CartView: View {
     }
 }
 
-struct OrderView_Previews: PreviewProvider {
-    static var previews: some View {
-        let order = Order()
-        order.products = Array(mockProducts.prefix(upTo: 3))
-//        order.products = []
-        
-        return CartView().environmentObject(order)
-    }
-}
 
 struct OrderItemView: View {
     
     @EnvironmentObject var order: Order
-    var product: Product
+    var orderItem: OrderItem
     
     var body: some View {
+        
+        
+        
+        
         HStack{
-            AsyncImage(url: URL(string: product.imageURL)) { image in
+            AsyncImage(url: URL(string: orderItem.product.imageURL)) { image in
                 image.resizable()
             } placeholder: {
                 ProgressView()
@@ -121,10 +117,10 @@ struct OrderItemView: View {
             
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Text("\(product.title)")
+                    Text("\(orderItem.product.title)")
                         .font(.system(size: 12, weight: .light))
                         .foregroundColor(.darkGray)
-                    Text("$\(product.price)")
+                    Text("$\(orderItem.product.price, specifier: "%.2f")")
                         .foregroundColor(.darkGray)
                         .font(.system(size: 12, weight: .light))
                 }
@@ -132,17 +128,31 @@ struct OrderItemView: View {
                 
                 Spacer(minLength: 20)
                 
-                Button {
-                    order.products = order.products.filter { $0.id != product.id }
-                } label: {
-                    Image(systemName: "x.circle").accentColor(.lightBlack)
+                
+                HStack {
+                    Button(action: {
+                        self.order.addToCart(product: orderItem.product)
+                    }, label: {
+                        Image(systemName: "plus")
+                    }).accentColor(.darkGray)
                     
+                    Text("\(orderItem.number)")
+                        .font(.system(size: 14, weight: .light))
+                        .foregroundColor(.darkGray)
+                    
+                    Button(action: {
+                        self.order.removeProductFromCart(product: orderItem.product)
+                    }, label: {
+                        Image(systemName: "minus")
+                    }).accentColor(.darkGray)
                 }
+                
             }
             .padding()
             
         }
         .padding()
+        
     }
 }
 
@@ -182,3 +192,10 @@ struct TotalView: View {
 }
 
 
+struct OrderView_Previews: PreviewProvider {
+    static var previews: some View {
+        let order = Order()
+        order.orderItems = Array(mockOrderItems.prefix(upTo: 3))
+        return CartView().environmentObject(order)
+    }
+}
