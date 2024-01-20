@@ -4,6 +4,7 @@ import SwiftUI
 struct ShopView: View {
     
     @EnvironmentObject var order: Order
+    @ObservedObject var firebaseController = FirebaseController()
     
     var body: some View {
         
@@ -37,14 +38,16 @@ struct ShopView: View {
             // Products
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 15) {
-                    ForEach(mockOrderItems) { orderItem in
-                        OrderItemCellView(orderItem: orderItem)
+                    ForEach(firebaseController.products) { product in
+                        OrderItemCellView(product: product)
                     }
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
             
             Spacer()
-        }
+        }.onAppear(perform: {
+            firebaseController.downloadProducts()
+        })
         
     }
 }
@@ -53,12 +56,12 @@ struct OrderItemCellView: View {
     @EnvironmentObject var order: Order
     @State private var showProductView = false
     
-    var orderItem: OrderItem
+    var product: Product
     
     var body: some View {
         
         HStack(alignment: .center){
-            AsyncImage(url: URL(string: orderItem.product.imageURL)) { image in
+            AsyncImage(url: URL(string: product.imageURL)) { image in
                 image
                     .resizable()
                     .scaledToFit()
@@ -69,24 +72,25 @@ struct OrderItemCellView: View {
             }
             
             
-            Text("\(orderItem.product.title)")
+            Text("\(product.title)")
                 .font(.system(size: 12, weight: .light))
                 .foregroundColor(.darkGray)
             
             Spacer()
             
             
-            Text("$\(orderItem.product.price, specifier: "%.2f")")
+            Text("$\(product.price, specifier: "%.2f")")
                 .foregroundColor(.darkGray)
                 .font(.system(size: 12, weight: .light))
             
         }
         .onTapGesture {
             showProductView.toggle()
+            print("image: \(product.imageURL)")
         }
         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
         .sheet(isPresented: $showProductView) {
-            ProductView(product: orderItem.product)
+            ProductView(product: product)
         }
     }
     

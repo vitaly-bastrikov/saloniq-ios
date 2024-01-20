@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
 import SwiftUI
+import Firebase
 
 struct Product: Identifiable, Codable, Hashable {
     var id: UUID = UUID()
@@ -72,6 +72,7 @@ class Order: ObservableObject {
         }
 
     }
+    
 }
 
 struct CheckoutIntentResponse: Decodable {
