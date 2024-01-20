@@ -40,7 +40,7 @@ struct HomeView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 20) {
                         ForEach(mockProducts) { product in
-                            ExtractedView(product: product)
+                            ItemCellView(product: product)
                             
                         }
                     }
@@ -64,7 +64,7 @@ struct HomeView_Previews: PreviewProvider {
     }
 }
 
-struct ExtractedView: View {
+struct ItemCellView: View {
     @EnvironmentObject var order: Order
     
     var product: Product
@@ -93,6 +93,7 @@ struct ExtractedView: View {
                 .padding()
                 
                 Spacer()
+
                 
             }
             .padding()

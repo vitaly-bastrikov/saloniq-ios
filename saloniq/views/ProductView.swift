@@ -48,7 +48,7 @@ struct ProductView: View {
             .foregroundColor(.white)
             .font(.system(size: 12, weight: .light))
             .padding(7)
-            .background(Color(UIColor.darkGray))
+            .background(Color(UIColor.black))
             
             
         }

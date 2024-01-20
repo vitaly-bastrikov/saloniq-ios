@@ -9,7 +9,7 @@ import Foundation
 
 import SwiftUI
 
-struct Product: Identifiable {
+struct Product: Identifiable, Codable {
     var id: UUID = UUID()
     
     var title: String
@@ -29,6 +29,10 @@ class Order: ObservableObject {
         }
         return temp
     }
+}
+
+struct CheckoutIntentResponse: Decodable {
+    let clientSecret: String
 }
 
 let mockDescription = "From Science to Beauty With more than 30 years of dedicated research, at L'Oréal Paris, we know your skin inside and out, whether it’s normal, dry, dull, aging or combination.  \n \nOur skincare creams are developed and rigorously tested with leading skin experts and scientists worldwide. Proven science, our cutting-edge innovations are captured in luxurious textures for a sumptuous skincare experience."
