@@ -14,31 +14,75 @@ struct ProductView: View {
     let product: Product
     
     var body: some View {
-        VStack {
-            Text("\(product.title)")
-                .font(.system(size: 16, weight: .light))
-                .foregroundColor(.darkGray)
+        VStack(spacing: 30) {
+            VStack {
+                AsyncImage(url: URL(string: product.imageURL)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200)
+                    
+                } placeholder: {
+                    ProgressView()
+                }
+                Text("\(product.title)")
+                    .font(.system(size: 16, weight: .light))
+                    .foregroundColor(.darkGray)
+            }.frame(maxWidth: .infinity)
             
-            Spacer()
             
-            AsyncImage(url: URL(string: product.imageURL)) { image in
-                image.resizable()
-            } placeholder: {
-                ProgressView()
+            VStack(alignment: .leading, spacing: 10) {
+                Text("DESCRIPTION")
+                    .foregroundColor(.darkGray)
+                    .font(.system(size: 14, weight: .light))
+                
+                Text(product.description)
+                    .foregroundColor(.darkGray)
+                    .font(.system(size: 12, weight: .light))
             }
-            .scaledToFit()
-            .frame(width: 200)
             
-            Text(product.description)
-                .foregroundColor(.darkGray)
-                .font(.system(size: 12, weight: .light))
-                .padding()
+            VStack(alignment: .leading, spacing: 10) {
+                Text("PRODUCT DETAILS")
+                    .foregroundColor(.darkGray)
+                    .font(.system(size: 14, weight: .light))
+                
+                HStack {
+                    Text("MATERIAL")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                    Spacer()
+                    Text("Metal")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                }
+                
+                HStack {
+                    Text("SIZE")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                    Spacer()
+                    Text("XS")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                }
+                
+                HStack {
+                    Text("WEIGHT")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                    Spacer()
+                    Text("0.6kg")
+                        .foregroundColor(.darkGray)
+                        .font(.system(size: 12, weight: .light))
+                }
+            }
+                
             
             Spacer()
             Text("$\(product.price, specifier: "%.2f")")
                 .foregroundColor(.darkGray)
                 .font(.system(size: 14, weight: .light))
-                .padding()
+                
             
             
             Button("ADD TO CART") {
