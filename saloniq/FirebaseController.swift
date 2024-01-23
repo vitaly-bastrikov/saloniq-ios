@@ -48,4 +48,41 @@ class FirebaseController: ObservableObject {
         }
     }
     
+    func addOrder(firstName: String, lastName: String, order: Order, street: String, city: String, phoneNumner: String) {
+        let db = Firestore.firestore()
+        var message = ""
+        
+        message.append("<html> <body> <h1>New Order</h1>")
+        message.append("<h2>Total: $\(order.total)</h2>")
+        message.append("<p>Customer Name: \(firstName) \(lastName) </p> ")
+        
+        // address
+        message.append("<h2>Address</h2>")
+        message.append("<p>City: \(city) </p>")
+        message.append("<p>Street: \(street) </p>")
+        message.append("<p>Phone Number: \(phoneNumner) </p>")
+        
+        // order
+        message.append("<h2>Order</h2> ")
+        for orderItem in order.orderItems {
+            message.append("<p> Product: \(orderItem.product.title) x \(orderItem.number) </p>")
+        }
+        
+        
+        db.collection("mail").addDocument(data: [
+            "to": "bastrikov.vitaly@gmail.com",
+            "message": [
+              "subject": "\(firstName) \(lastName) has placed the order",
+              
+              "html": "<html> <body> \(message) </body> </html>"
+            ]
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
+    }
+    
 }

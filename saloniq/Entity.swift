@@ -75,6 +75,10 @@ class Order: ObservableObject {
     
 }
 
+struct AuthorizePaymentRequest: Codable {
+    var total: Double
+}
+
 struct CheckoutIntentResponse: Decodable {
     let clientSecret: String
 }

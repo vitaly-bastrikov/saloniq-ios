@@ -22,7 +22,7 @@ struct CartView: View {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(order.total)
+        request.httpBody = try? JSONEncoder().encode(AuthorizePaymentRequest(total: order.total))
         
         URLSession.shared.dataTask(with: request) {data, response, error in
             
