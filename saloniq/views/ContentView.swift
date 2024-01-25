@@ -20,10 +20,10 @@ struct ContentView: View {
                     Label("Cart", systemImage: "cart")
                 }
             
-            AccountView()
-                .tabItem {
-                    Label("Account", systemImage: "person")
-                }
+//            AccountView()
+//                .tabItem {
+//                    Label("Account", systemImage: "person")
+//                }
         }
         .accentColor(.black)
     }

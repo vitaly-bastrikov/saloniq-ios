@@ -44,11 +44,19 @@ struct CartView: View {
     
     var body: some View {
         NavigationStack {
-            VStack (alignment: .leading) {
-                Text("MY CART")
-                    .font(.system(size: 20, weight: .light))
-                    .foregroundColor(.darkGray)
-                    .padding()
+            VStack (alignment: .leading, spacing: 20) {
+                HStack {
+                    Text("MY CART")
+                        .font(.system(size: 20, weight: .light))
+                        .foregroundColor(.darkGray)
+                        .padding()
+                    Spacer()
+                    Text("TOTAL: $\(order.total, specifier: "%.2f")")
+                        .font(.system(size: 14, weight: .light))
+                        .foregroundColor(.darkGray)
+                        .padding()
+                }
+                
                 
                 // card products
                 if order.orderItems.count > 0 {
@@ -62,14 +70,13 @@ struct CartView: View {
                     
                     Spacer()
                     
-                    TotalView()
                     
                     // Place your order
                     NavigationLink(isActive: $isActive){
                         CheckoutView()
                     } label: {
                         HStack {
-                            Spacer()
+                            
                             Button("GO TO CHECKOUT") {
                                 startCheckout { clientSecret in
                                     PaymentConfig.shared.paymentIntentClientSecret = clientSecret
@@ -79,13 +86,13 @@ struct CartView: View {
                                 }
                             }
                             .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .light))
-                            .padding(7)
+                            .font(.system(size: 16, weight: .light))
+                            .padding(10)
                             .background(Color(UIColor.black))
-                            Spacer()
+                            .frame(maxWidth: .infinity)
                         }
-                        
                     }
+                    Spacer(minLength: 30)
                 } else {
                     EmptyCartView()
                 }
@@ -103,9 +110,6 @@ struct OrderItemView: View {
     var orderItem: OrderItem
     
     var body: some View {
-        
-        
-        
         
         HStack{
             AsyncImage(url: URL(string: orderItem.product.imageURL)) { image in
@@ -158,7 +162,6 @@ struct OrderItemView: View {
 
 struct EmptyCartView: View {
     var body: some View {
-        Spacer()
         VStack {
             Image(.emptyCart)
                 .resizable()
@@ -168,34 +171,18 @@ struct EmptyCartView: View {
                 .font(.system(size: 14, weight: .light))
                 .foregroundColor(.darkGray)
         }
-        
-        Spacer()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    
     }
 }
 
-struct TotalView: View {
-    @EnvironmentObject var order: Order
-    
-    var body: some View {
-        HStack () {
-            Spacer()
-            Text("TOTAL")
-                .font(.system(size: 14, weight: .light))
-                .foregroundColor(.darkGray)
-            //                Spacer()
-            Text("$\(order.total, specifier: "%.2f")")
-                .font(.system(size: 14))
-                .foregroundColor(.darkGray)
-            Spacer()
-        }.padding()
-    }
-}
 
 
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
         let order = Order()
         order.orderItems = Array(mockOrderItems.prefix(upTo: 3))
+//        order.orderItems = []
         return CartView().environmentObject(order)
     }
 }
